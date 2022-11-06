@@ -1,0 +1,63 @@
+{
+  "name": "basket",
+  "version": "0.0.0",
+  "description": "create template helper",
+  "license": "MIT",
+  "author": "pengzhanbo <q942450674@outlook.com> (https://github.com/pengzhanbo)",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "DEBUG=basket:* tsup --watch",
+    "build": "tsup"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "sourcemap": false,
+    "dts": true,
+    "splitting": false,
+    "clean": true,
+    "format": [
+      "esm",
+      "cjs"
+    ]
+  },
+  "prettier": "@pengzhanbo/prettier-config",
+  "dependencies": {
+    "cac": "^6.7.14",
+    "debug": "^4.3.4",
+    "execa": "^6.1.0",
+    "fast-glob": "^3.2.12",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "meow": "^11.0.0",
+    "picocolors": "^1.0.0",
+    "prompts": "^2.4.2",
+    "sort-package-json": "^2.0.0"
+  },
+  "devDependencies": {
+    "@pengzhanbo/eslint-config-ts": "^0.2.10",
+    "@pengzhanbo/prettier-config": "^0.2.10",
+    "@types/debug": "^4.1.7",
+    "@types/lodash": "^4.14.188",
+    "@types/node": "^18.11.9",
+    "@types/prompts": "^2.4.1",
+    "eslint": "^8.26.0",
+    "prettier": "^2.7.1",
+    "tsup": "^6.4.0",
+    "typescript": "^4.8.4"
+  }
+}
