@@ -44,8 +44,10 @@
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "meow": "^11.0.0",
+    "pacote": "^15.0.6",
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",
+    "semver": "^7.3.8",
     "sort-package-json": "^2.0.0"
   },
   "devDependencies": {
@@ -54,7 +56,9 @@
     "@types/debug": "^4.1.7",
     "@types/lodash": "^4.14.188",
     "@types/node": "^18.11.9",
+    "@types/pacote": "^11.1.5",
     "@types/prompts": "^2.4.1",
+    "@types/semver": "^7.3.13",
     "eslint": "^8.26.0",
     "prettier": "^2.7.1",
     "tsup": "^6.4.0",

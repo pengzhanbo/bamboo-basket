@@ -1,61 +1,58 @@
-import path from 'node:path'
-import _ from 'lodash'
-import type { AnyFlags } from 'meow'
-import meow from 'meow'
-import type { PromptObject } from 'prompts'
-import prompts from 'prompts'
-import type { Templates } from './types'
+import fs from 'node:fs'
+import path from 'path'
+import pc from 'picocolors'
+import BasketManager from './BasketManager'
+import PackageManager from './PackageManager'
+import Template from './Template'
+import type { BasketManagerOptions, Setup, TemplateItem } from './types'
 import { cameDashesCase, createDebug } from './utils'
 
-const debug = createDebug('basket')
+const debug = createDebug('')
 
-export interface BasketOptions {
-  templates: Templates
-  helpText?: string
-  argv: AnyFlags
-  cwd?: string
-}
-export default class Basket {
-  options: BasketOptions
-  target: string
-  cliOptions: Record<string, any>
-  answer: Record<string, any>
-  cwd: string
-  constructor(options: BasketOptions) {
-    this.options = options
-    this.cwd = this.options.cwd || process.cwd()
-    this.answer = Object.create(null)
-    const { target, cliOptions } = this.parseArgv()
-    this.target = target
-    this.cliOptions = cliOptions
-    debug('target', target)
-    debug('cliOptions', cliOptions)
-  }
-
-  async prompt<T extends string = string>(schema: PromptObject<T>) {
-    const answer = await prompts(schema)
-    this.answer = _.merge(this.answer, answer)
-    return answer
-  }
-
-  getDefaultName() {
-    this.target = ['.', './', ''].includes(this.target) ? '.' : this.target
-    const target = path
-      .resolve(this.cwd, this.target)
-      .replace(/\/$/, '')
-      .split('/')
-    return cameDashesCase(target[target.length - 1])
-  }
-
-  private parseArgv() {
-    const argv = meow({
-      importMeta: import.meta,
-      flags: this.options.argv || {},
-      help: this.options.helpText,
+async function basket(options: BasketManagerOptions, setup?: Setup) {
+  const manager = new BasketManager(options)
+  let templatePath!: TemplateItem['dir']
+  if (options.templates.length > 1) {
+    const { template } = await manager.prompt({
+      name: 'template',
+      message: 'Select template',
+      type: 'select',
+      choices: options.templates.map((template) => ({
+        value: template,
+        title: template.name,
+      })),
     })
-    return {
-      target: argv.input[0] || '.',
-      cliOptions: argv.flags,
-    }
+    templatePath = template.dir
+  } else {
+    templatePath = options.templates[0].dir
   }
+  debug('template', templatePath)
+
+  const template = new Template(
+    path.resolve(options.root, templatePath),
+    manager.target
+  )
+  const packageManager = new PackageManager()
+
+  await manager.prompt<string>({
+    name: 'projectName',
+    message: `Input your ${pc.cyan('project name')}`,
+    type: 'text',
+    initial: manager.getDefaultName(),
+    format: (value) => cameDashesCase(value),
+  })
+  let success = () => {}
+  if (setup) {
+    success =
+      (await setup({ template, pkg: packageManager, manager, colors: pc })) ||
+      success
+  }
+  await template.generate()
+  const packageJsonFilepath = path.join(manager.target, 'package.json')
+  if (fs.existsSync(packageJsonFilepath)) {
+    await packageManager.write(packageJsonFilepath)
+  }
+  success()
 }
+
+export default basket
