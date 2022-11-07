@@ -34,6 +34,7 @@ export interface SetupOptions {
   colors: Colors
   argv: Record<string, any>
   answer: Record<string, any>
+  defaultName: string
   addPrompts: <T extends string = string>(
     schema: PromptObject
   ) => Promise<Answers<T>>

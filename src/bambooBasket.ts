@@ -76,6 +76,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
     const dirs = target.replace(/\/$/, '').split('/')
     return cameDashesCase(dirs[dirs.length - 1])
   }
+  const defaultName = getDefaultName()
 
   const currentTemplate = await getTemplate(
     options.templateDir,
@@ -100,14 +101,6 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   })
   const packageManager = new PackageManager()
 
-  await addPrompts<string>({
-    name: 'projectName',
-    message: `Input your ${colors.cyan('project name')}`,
-    type: 'text',
-    initial: getDefaultName(),
-    format: (value) => cameDashesCase(value),
-  })
-
   const setupOptions: SetupOptions = {
     templateName: currentTemplate.name,
     template,
@@ -115,6 +108,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
     colors,
     argv,
     answer,
+    defaultName,
     addPrompts,
   }
 
