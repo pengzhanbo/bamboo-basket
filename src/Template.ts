@@ -4,14 +4,22 @@ import fg from 'fast-glob'
 import handlebars from 'handlebars'
 import _ from 'lodash'
 
+export interface TemplateOptions {
+  source: string
+  target: string
+  name: string
+}
+
 export default class Template<T = Record<string, any>> {
   source: string
   data: T
   exclude: string[] = []
   target: string
-  constructor(source: string, target: string) {
+  name: string
+  constructor({ source, target, name }: TemplateOptions) {
     this.source = source
     this.target = target
+    this.name = name
     this.data = Object.create(null)
   }
 
@@ -31,7 +39,9 @@ export default class Template<T = Record<string, any>> {
     const fileList = await this.readFileList()
     Object.keys(fileList).forEach(async (filepath: string) => {
       const content = fileList[filepath]
-      const target = path.resolve(this.target, filepath)
+      const target = path
+        .resolve(this.target, filepath)
+        .replace(/\.handlebars$/, '')
       const dirname = path.dirname(target)
       await fs.mkdir(dirname, { recursive: true })
       await fs.writeFile(target, this.render(content), 'utf-8')

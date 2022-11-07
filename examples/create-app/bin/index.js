@@ -1,38 +1,16 @@
-import basket from '../../../dist/index.js'
+import path from 'node:path'
+import basket, { getDirname } from '../../../dist/index.js'
 
-basket({
-  templates: [
-    { name: 'tem1', dir: '' },
-    { name: 'tem2', dir: '' },
-  ],
-})
-
-// async function createApp() {
-//   const target = basket.target
-//   const directoryName = basket.directoryName
-
-//   const name = await basket.addPrompt({
-//     // do something
-//   })
-//   basket.updatePkg('name', name)
-//   basket.addDependence('foo', 'version')
-//   basket.addDevDependence('foo', 'version')
-
-//   basket.useTemplate('default')
-
-//   basket.setTemplateData({})
-//   basket.templateFilter((filepath) => {
-//     // eslint-disable-next-line no-console
-//     console.log(filepath)
-//     return false
-//   })
-//   basket.excludeFile('filepath')
-
-//   await basket.create()
-
-//   if (basket.autoInstall) {
-//     await basket.install()
-//   }
-// }
-
-// createApp()
+basket(
+  {
+    root: path.resolve(getDirname(import.meta.url), '../'),
+    templateList: [
+      { name: 'tem1', dir: 'template' },
+      { name: 'tem2', dir: 'template' },
+    ],
+  },
+  ({ pkg, template, answer, argv }) => {
+    // eslint-disable-next-line no-console
+    console.log(pkg, template, answer, argv)
+  }
+)

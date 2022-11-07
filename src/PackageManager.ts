@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import _ from 'lodash'
 import pacote from 'pacote'
-import semverLte from 'semver/functions/lte'
+import semver from 'semver'
 import sortPackage from 'sort-package-json'
 import type { PackageVersion } from './types'
 
@@ -15,10 +15,10 @@ interface DependenceObj {
   [name: string]: string
 }
 export default class PackageManager {
-  pkg: Record<string, any>
-  queueList: QueueItem[]
-  dependence: DependenceObj
-  devDependence: DependenceObj
+  private pkg: Record<string, any>
+  private queueList: QueueItem[]
+  private dependence: DependenceObj
+  private devDependence: DependenceObj
   constructor() {
     this.queueList = []
     this.dependence = {}
@@ -72,7 +72,7 @@ export default class PackageManager {
       let version = updateDeps[dependence]
       version = await this.getPackageVersion(dependence, version)
       if (pkgDeps[dependence]) {
-        version = semverLte(version, pkgDeps[dependence])
+        version = semver.lte(version, pkgDeps[dependence])
           ? pkgDeps[dependence]
           : version
       }
