@@ -66,6 +66,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
     )
   }
   let answer: Record<string, any> = Object.create(null)
+  // 解析命令行参数
   const { target: _target, argv } = parseArgv(
     options.argv,
     options.helpText || '',
@@ -79,6 +80,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   }
   const defaultName = getDefaultName()
 
+  // 获取 当前使用的模板
   const currentTemplate = await getTemplate(
     options.templateDir,
     options.templateList
@@ -115,16 +117,21 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
 
   let finish: Finish = () => {}
   if (setup) {
+    // 执行 setup 函数
     finish = (await setup(setupOptions)) || finish
   }
+
   const spinner = ora('generate...')
   spinner.start()
+  // 生成文件
   await template.generate()
+
   const packageJsonFilepath = path.join(target, 'package.json')
   if (fs.existsSync(packageJsonFilepath)) {
     spinner.start('write package.json...')
     await packageManager.write(packageJsonFilepath)
   }
+
   await finish({ spinner })
   spinner.succeed('successful!')
 }

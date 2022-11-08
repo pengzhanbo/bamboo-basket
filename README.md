@@ -83,8 +83,9 @@ bambooBasket({
   pkg.addDevDependence('foo', '^1.0.0')
 
   // 返回一个回调函数， 当通过模板生成到目标目录成功后，执行回调
-  return () => {
+  return ({ spinner }) => {
     // 可以继续在这里执行一些必要的命令
+    // 比如 用 execa 执行 `git init` 或 `npm install` 操作等
   }
 })
 ```

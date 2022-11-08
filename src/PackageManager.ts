@@ -46,14 +46,28 @@ export default class PackageManager {
     await fs.writeFile(filepath, content, 'utf-8')
   }
 
+  /**
+   * 更新 package 内容
+   * @param fn
+   */
   public setPackage(fn: QueueItem) {
     this.queueList.push(fn)
   }
 
+  /**
+   * 新增 dependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
+   * @param name 包名称
+   * @param version  版本号 'latest' | 'next' | 'pre' | `semver`
+   */
   public addDependence(name: string, version: PackageVersion) {
     this.dependence[name] = version
   }
 
+  /**
+   * 新增 devDependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
+   * @param name 包名称
+   * @param version  版本号 'latest' | 'next' | 'pre' | `semver`
+   */
   public addDevDependence(name: string, version: PackageVersion) {
     this.devDependence[name] = version
   }

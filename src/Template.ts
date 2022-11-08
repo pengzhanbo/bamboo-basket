@@ -28,10 +28,18 @@ export default class Template<T = Record<string, any>> {
     this.fileList = Object.create(null)
   }
 
+  /**
+   * 设置编译模板时使用的数据
+   * @param data
+   */
   public setData(data: Record<string, any>) {
     _.merge(this.data, data)
   }
 
+  /**
+   * 新增生成文件时，需要排除的模板文件
+   * @param glob string | string[] 文件路径，或 glob匹配字符串
+   */
   public addExclude(glob: string | string[]) {
     if (Array.isArray(glob)) {
       this.exclude.push(...glob)
