@@ -2,8 +2,18 @@
   "name": "bamboo-basket",
   "version": "0.0.0",
   "description": "create template helper",
+  "keywords": [
+    "npm init",
+    "template",
+    "create template"
+  ],
   "license": "MIT",
   "author": "pengzhanbo <q942450674@outlook.com> (https://github.com/pengzhanbo)",
+  "homepage": "https://github.com/pengzhanbo/bamboo-basket",
+  "repository": {
+    "url": "https://github.com/pengzhanbo/bamboo-basket.git",
+    "type": "git"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
