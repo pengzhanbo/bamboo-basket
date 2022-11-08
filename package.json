@@ -16,7 +16,8 @@
   },
   "scripts": {
     "dev": "DEBUG=basket:* tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "release": "bumpp package.json --commit --push --tag && pnpm publish --access public"
   },
   "files": [
     "bin",
@@ -61,6 +62,7 @@
     "@types/pacote": "^11.1.5",
     "@types/prompts": "^2.4.1",
     "@types/semver": "^7.3.13",
+    "bumpp": "^8.2.1",
     "eslint": "^8.26.0",
     "prettier": "^2.7.1",
     "tsup": "^6.4.0",
