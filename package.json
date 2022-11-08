@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "DEBUG=basket:* tsup --watch",
     "build": "tsup",
+    "prepublishOnly": "pnpm build",
     "release": "bumpp package.json --commit --push --tag && pnpm publish --access public"
   },
   "files": [
