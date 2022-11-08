@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'path'
 import _ from 'lodash'
+import ora from 'ora'
 import colors from 'picocolors'
 import type { PromptObject } from 'prompts'
 import prompts from 'prompts'
@@ -116,12 +117,16 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   if (setup) {
     finish = (await setup(setupOptions)) || finish
   }
+  const spinner = ora('generate...')
+  spinner.start()
   await template.generate()
   const packageJsonFilepath = path.join(target, 'package.json')
   if (fs.existsSync(packageJsonFilepath)) {
+    spinner.start('write package.json...')
     await packageManager.write(packageJsonFilepath)
   }
-  await finish()
+  await finish({ spinner })
+  spinner.succeed('successful!')
 }
 
 export default bambooBasket

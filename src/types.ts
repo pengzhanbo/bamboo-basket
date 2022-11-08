@@ -1,4 +1,5 @@
 import type { AnyFlags } from 'meow'
+import type { Ora } from 'ora'
 import type { Colors } from 'picocolors/types'
 import type { Answers, PromptObject } from 'prompts'
 import type PackageManager from './PackageManager'
@@ -24,7 +25,7 @@ export interface BambooBasketOptions {
 export type PackageVersion = 'latest' | 'next' | 'pre' | string
 
 export interface Finish {
-  (): void | Promise<void>
+  (options?: { spinner: Ora }): void | Promise<void>
 }
 
 export interface SetupOptions {
