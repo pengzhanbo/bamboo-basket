@@ -1,3 +1,3 @@
-import pino from 'pino'
+import consola from 'consola'
 
-export const logger = pino()
+export const logger = consola
