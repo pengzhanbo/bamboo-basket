@@ -1,4 +1,4 @@
-import execa from 'execa'
+import { execa } from 'execa'
 import bambooBasket from './bambooBasket'
 import type { BambooBasketOptions } from './types'
 

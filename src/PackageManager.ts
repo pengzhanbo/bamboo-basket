@@ -42,7 +42,7 @@ export default class PackageManager {
     await this.runQueue()
     await this.updateDeps(this.pkg.devDependence, this.devDependence)
     await this.updateDeps(this.pkg.dependence, this.dependence)
-    const content = sortPackage(JSON.stringify(this.pkg))
+    const content = sortPackage(JSON.stringify(this.pkg, null, '  '))
     await fs.writeFile(filepath, content, 'utf-8')
   }
 
@@ -59,16 +59,16 @@ export default class PackageManager {
   }
 
   private async runQueue() {
-    this.queueList.forEach(async (fn) => {
+    for (const fn of this.queueList) {
       const data = await fn(this.pkg)
       if (data) {
         this.pkg = _.merge(this.pkg, data)
       }
-    })
+    }
   }
 
   private async updateDeps(pkgDeps: DependenceObj, updateDeps: DependenceObj) {
-    Object.keys(updateDeps).forEach(async (dependence) => {
+    for (const dependence of Object.keys(updateDeps)) {
       let version = updateDeps[dependence]
       version = await this.getPackageVersion(dependence, version)
       if (pkgDeps[dependence]) {
@@ -77,7 +77,7 @@ export default class PackageManager {
           : version
       }
       pkgDeps[dependence] = version
-    })
+    }
   }
 
   private async getPackageVersion(

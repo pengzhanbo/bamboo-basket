@@ -3,6 +3,9 @@ import path from 'node:path'
 import fg from 'fast-glob'
 import handlebars from 'handlebars'
 import _ from 'lodash'
+import { createDebug } from './utils'
+
+const debug = createDebug('template')
 
 export interface TemplateOptions {
   source: string
@@ -16,11 +19,13 @@ export default class Template<T = Record<string, any>> {
   exclude: string[] = []
   target: string
   name: string
+  fileList: Record<string, string>
   constructor({ source, target, name }: TemplateOptions) {
     this.source = source
     this.target = target
     this.name = name
     this.data = Object.create(null)
+    this.fileList = Object.create(null)
   }
 
   public setData(data: Record<string, any>) {
@@ -36,32 +41,33 @@ export default class Template<T = Record<string, any>> {
   }
 
   public async generate() {
-    const fileList = await this.readFileList()
-    Object.keys(fileList).forEach(async (filepath: string) => {
+    await this.readFileList()
+    const fileList = this.fileList
+    for (const filepath of Object.keys(fileList)) {
       const content = fileList[filepath]
       const target = path
         .resolve(this.target, filepath)
         .replace(/\.handlebars$/, '')
+      debug('write file: ', filepath)
       const dirname = path.dirname(target)
       await fs.mkdir(dirname, { recursive: true })
       await fs.writeFile(target, this.render(content), 'utf-8')
-    })
+    }
   }
 
   private async readFileList() {
-    const filepaths = await fg(this.source, {
+    const source = path.join(this.source, '**/*')
+    const filepaths = await fg(source, {
       cwd: this.source,
       dot: true,
       ignore: this.exclude,
     })
-    const fileList: Record<string, string> = {}
-    filepaths.forEach(async (filepath: string) => {
-      fileList[filepath] = await fs.readFile(
-        path.join(this.source, filepath),
-        'utf-8'
-      )
-    })
-    return fileList
+    debug('filepaths', filepaths)
+    this.fileList = Object.create(null)
+    for (const filepath of filepaths) {
+      const relativePath = path.relative(this.source, filepath)
+      this.fileList[relativePath] = await fs.readFile(filepath, 'utf-8')
+    }
   }
 
   private render(source: string) {
