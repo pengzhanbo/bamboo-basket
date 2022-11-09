@@ -29,7 +29,7 @@ pnpm add bamboo-basket
 
 ```ts
 import path from 'path'
-import bambooBasket, { execa, getDirname, logger } from 'bamboo-basket'
+import bambooBasket, { colors, execa, getDirname, logger } from 'bamboo-basket'
 
 bambooBasket({
   // 配置 template 所在目录的父级
@@ -46,7 +46,7 @@ bambooBasket({
     // 命令行 --name=project 或  -n=project 会被解析为  { name: 'project' }
     name: { alias: 'n', type: 'string' }
   }
-}, async ({ addPrompts, template, pkg, colors, argv, answer, templateName }) => {
+}, async ({ addPrompts, template, pkg, argv, answer, templateName }) => {
   // 通过 argv 可以获取命令行参数对象
   console.log(argv) // { name: 'project' }
 
@@ -95,7 +95,7 @@ bambooBasket({
 - [X] 模板创建，多模板支持
 - [X] 依赖版本管理， 通过 `dist-tags` 获取对应版本
 - [ ] 提供 cli 以及 config文件 配套
-- [ ] `npm init xxx-app` 说明文档
+- [X] `npm init xxx-app` 说明文档
 
 ## Why ?
 

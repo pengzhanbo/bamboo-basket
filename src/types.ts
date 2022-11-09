@@ -1,6 +1,5 @@
 import type { AnyFlags } from 'meow'
 import type { Ora } from 'ora'
-import type { Colors } from 'picocolors/types'
 import type { Answers, PromptObject } from 'prompts'
 import type PackageManager from './PackageManager'
 import type Template from './Template'
@@ -74,12 +73,7 @@ export interface SetupOptions {
    * 可以用它进一步更新数据，添加依赖等
    */
   pkg: PackageManager
-  /**
-   * 颜色，可以用于日志输出设置文本样式
-   *
-   * @see [picocolors](https://github.com/alexeyraspopov/picocolors#readme)
-   */
-  colors: Colors
+
   /**
    * 解析后的命令行参数
    */

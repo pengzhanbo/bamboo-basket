@@ -108,7 +108,6 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
     templateName: currentTemplate.name,
     template,
     pkg: packageManager,
-    colors,
     argv,
     answer,
     defaultName,
