@@ -68,7 +68,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   let answer: Record<string, any> = Object.create(null)
   // 解析命令行参数
   const { target: _target, argv } = parseArgv(
-    options.argv,
+    options.argv || {},
     options.helpText || '',
     import.meta
   )

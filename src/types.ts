@@ -45,7 +45,7 @@ export interface BambooBasketOptions {
    * 配置 命令行参数解析规则
    * @see [meow flags](https://github.com/sindresorhus/meow#flags)
    */
-  argv: AnyFlags | (() => AnyFlags)
+  argv?: AnyFlags | (() => AnyFlags)
 
   cwd?: string
 }

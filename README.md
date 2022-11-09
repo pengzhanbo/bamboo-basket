@@ -6,6 +6,8 @@
 
 - 支持 handlebars
 - 支持 多模板选择
+  - 模板选择对话框
+- 支持 模板文件过滤
 - 支持 自定义命令式交互终端
 - 支持 向 `package.json` 添加 动态版本依赖
   - 查询依赖的版本信息，根据 `latest`、`next`、`pre`动态获取版本或指定某一版本
@@ -90,11 +92,48 @@ bambooBasket({
 })
 ```
 
+### Cli
+
+支持通过 cli 命令执行模板生成
+```sh
+npx basket [target-dir]
+```
+命令读取项目根目录下的 `basket.config.{ts,js}` 文件，获取配置信息，
+然后执行模板生成
+
+`basket.config.ts`
+```ts
+import { defineConfig } from 'bamboo-basket'
+
+export default defineConfig({
+  root: __dirname,
+  template: 'template',
+}, async ({ addPrompts }) => {
+  await addPrompts({
+    name: 'projectName',
+    type: 'text',
+    message: 'Input Your Project Name:'
+  })
+})
+```
+
+也可以通过 命令行参数 `--config,-c` 指定配置文件路径
+```sh
+npx basket ./my-project -c ./scripts/basket.config.ts
+```
+
+## 示例
+
+请查看 [examples](/examples/)
+
+- [create-app](/examples/create-app/) 创建一个支持 `npm init` 的模板仓库
+- [multi-template](/examples/multi-template/) 多模板支持
+- [use-config-file](/examples/use-config-file/) 使用CLI 命令加载配置文件
 ## Todo List
 
 - [X] 模板创建，多模板支持
 - [X] 依赖版本管理， 通过 `dist-tags` 获取对应版本
-- [ ] 提供 cli 以及 config文件 配套
+- [X] 提供 cli 以及 config文件 配套
 - [X] `npm init xxx-app` 说明文档
 
 ## Why ?
