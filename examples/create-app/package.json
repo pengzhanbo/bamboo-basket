@@ -1,0 +1,7 @@
+{
+  "name": "create-app",
+  "bin": {
+    "create-app": "./bin/index.js"
+  },
+  "type": "module"
+}
