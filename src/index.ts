@@ -4,6 +4,7 @@ import bambooBasket from './bambooBasket'
 import type { BambooBasketOptions } from './types'
 
 export * from './utils'
+export * from './defineConfig'
 
 export { bambooBasket, execa, colors }
 

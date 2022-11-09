@@ -6,11 +6,12 @@
     "declaration": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "module": "ESNext",
     "lib": ["ESNext"],
     "sourceMap": false,
     "noEmitOnError": true
   },
-  "include": ["./src", "./example"],
+  "include": ["./src", "./example", "package.json"],
   "exclude": ["dist", "node_modules"],
 }
