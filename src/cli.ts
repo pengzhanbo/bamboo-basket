@@ -12,13 +12,13 @@ interface CliOptions {
   template?: string
 }
 
-cli.option('-c, --config <file>', '[string] use specified config file')
+cli.option('-c, --config <file>', '[string] use specified config file.')
 
 cli
-  .command('[target]', 'generate files to target dir')
+  .command('[target]', 'generate files to target directory.')
   .allowUnknownOptions()
-  .option('-r, --root <root>', '[string] template root directory')
-  .option('-t, --template <templateDir>', '[string] use template directory')
+  .option('-r, --root <root>', '[string] template root directory.')
+  .option('-t, --template <templateDir>', '[string] use template directory.')
   .action(async (target: string, cliOptions: CliOptions) => {
     target ??= '.'
     const result = await loadConfigFromFile(cliOptions.config)
