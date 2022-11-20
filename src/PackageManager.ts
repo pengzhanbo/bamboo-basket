@@ -56,20 +56,58 @@ export default class PackageManager {
 
   /**
    * 新增 dependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
+   * @param deps
+   * @example
+   * ```ts
+   * pkg.addDependence({ foo: 'latest' })
+   * ```
+   */
+  public addDependence(deps: Record<string, string>): void
+  /**
+   * 新增 dependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
    * @param name 包名称
    * @param version  版本号 'latest' | 'next' | 'pre' | `semver`
+   * @example
+   * ```ts
+   * pkg.addDependence('foo', 'latest')
+   * ```
    */
-  public addDependence(name: string, version: PackageVersion) {
-    this.dependence[name] = version
+  public addDependence(name: string, version: PackageVersion): void
+  public addDependence(
+    depsOrName: Record<string, string> | string,
+    version?: PackageVersion
+  ): void {
+    if (typeof depsOrName === 'string') {
+      this.dependence[depsOrName] = version!
+    } else {
+      this.dependence = _.merge(this.dependence, depsOrName)
+    }
   }
 
+  /**
+   * 新增 devDependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
+   * @param deps
+   * @example
+   * ```ts
+   * pkg.addDevDependence({ foo: 'latest' })
+   * ```
+   */
+  public addDevDependence(deps: Record<string, string>): void
   /**
    * 新增 devDependence，支持设置 dist-tags 为版本号，动态获取当前对应的版本号
    * @param name 包名称
    * @param version  版本号 'latest' | 'next' | 'pre' | `semver`
    */
-  public addDevDependence(name: string, version: PackageVersion) {
-    this.devDependence[name] = version
+  public addDevDependence(name: string, version: PackageVersion): void
+  public addDevDependence(
+    depsOrName: Record<string, string> | string,
+    version?: PackageVersion
+  ): void {
+    if (typeof depsOrName === 'string') {
+      this.devDependence[depsOrName] = version!
+    } else {
+      this.devDependence = _.merge(this.devDependence, depsOrName)
+    }
   }
 
   private async runQueue() {
