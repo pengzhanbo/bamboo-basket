@@ -145,6 +145,6 @@ npx basket ./my-project -c ./scripts/basket.config.ts
 
 所以我将这个过程抽象为一个独立的库，通过这个库，可以很方便的定义一个模板，以及通过这个库快速生成。
 
-## LICENCE
+## LICENSE
 
-[MIT](/LICENCE)
+[MIT](/LICENSE)
