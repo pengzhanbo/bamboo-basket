@@ -75,7 +75,7 @@ export default class PackageManager {
   public addDependence(name: string, version: PackageVersion): void
   public addDependence(
     depsOrName: Record<string, string> | string,
-    version?: PackageVersion
+    version?: PackageVersion,
   ): void {
     if (typeof depsOrName === 'string') {
       this.dependence[depsOrName] = version!
@@ -101,7 +101,7 @@ export default class PackageManager {
   public addDevDependence(name: string, version: PackageVersion): void
   public addDevDependence(
     depsOrName: Record<string, string> | string,
-    version?: PackageVersion
+    version?: PackageVersion,
   ): void {
     if (typeof depsOrName === 'string') {
       this.devDependence[depsOrName] = version!
@@ -134,7 +134,7 @@ export default class PackageManager {
 
   private async getPackageVersion(
     packageName: string,
-    version: PackageVersion
+    version: PackageVersion,
   ) {
     if (['latest', 'next', 'pre'].includes(version)) {
       const res = await pacote.packument(packageName)

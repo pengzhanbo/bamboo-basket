@@ -30,7 +30,7 @@ pnpm add bamboo-basket
 ### 使用
 
 ```ts
-import path from 'path'
+import path from 'node:path'
 import bambooBasket, { colors, execa, getDirname, logger } from 'bamboo-basket'
 
 bambooBasket({
@@ -136,7 +136,7 @@ npx basket ./my-project -c ./scripts/basket.config.ts
 - [X] 提供 cli 以及 config文件 配套
 - [X] `npm init xxx-app` 说明文档
 
-## Why ?
+## Why?
 
 在我日常的开发任务中，经常需要重复创建一系列文件，或者想把某个项目抽象为一个模板，发布到 npm或者私有npm上，通过
 `npm init xxx-app ./my-project` 创建项目。

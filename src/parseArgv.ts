@@ -5,7 +5,7 @@ import meow from 'meow'
 export const parseArgv = (
   flags: AnyFlags | (() => AnyFlags),
   help: string,
-  importMeta: any
+  importMeta: any,
 ) => {
   const argv = meow({
     importMeta,

@@ -15,5 +15,5 @@ bambooBasket(
     } else if (templateName === 'template-2') {
       template.setData({})
     }
-  }
+  },
 )

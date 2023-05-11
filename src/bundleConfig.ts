@@ -21,7 +21,7 @@ const DEFAULT_CONFIG_FILES = [
 
 export const loadConfigFromFile = async (
   configFile?: string,
-  configRoot = process.cwd()
+  configRoot = process.cwd(),
 ): Promise<{
   config: [BambooBasketOptions, Setup]
   path: string
@@ -65,7 +65,7 @@ export const loadConfigFromFile = async (
     const config = await loadConfigFromBundledFile(
       resolvedPath,
       bundled.code,
-      isESM
+      isESM,
     )
 
     debug(`bundled config file loaded in ${getTime()}`)
@@ -83,7 +83,7 @@ export const loadConfigFromFile = async (
 
 async function bundleConfigFile(
   filename: string,
-  isESM: boolean
+  isESM: boolean,
 ): Promise<{ code: string }> {
   const dirnameVarName = '__basket_injected_dirname'
   const filenameVarName = '__basket_injected_filename'
@@ -123,11 +123,11 @@ async function bundleConfigFile(
             const contents = await fs.promises.readFile(args.path, 'utf-8')
             const injectValues =
               `const ${dirnameVarName} = ${JSON.stringify(
-                path.dirname(args.path)
+                path.dirname(args.path),
               )};` +
               `const ${filenameVarName} = ${JSON.stringify(args.path)};` +
               `const ${importMetaUrlVarName} = ${JSON.stringify(
-                pathToFileURL(args.path).href
+                pathToFileURL(args.path).href,
               )};`
             return {
               loader: args.path.endsWith('ts') ? 'ts' : 'js',
@@ -152,7 +152,7 @@ const _require = createRequire(import.meta.url)
 async function loadConfigFromBundledFile(
   fileName: string,
   bundledCode: string,
-  isESM: boolean
+  isESM: boolean,
 ): Promise<any> {
   if (isESM) {
     const fileBase = `${fileName}.timestamp-${Date.now()}`

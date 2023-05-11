@@ -32,7 +32,7 @@ cli
         root: cliOptions.root || options.root,
         templateDir: cliOptions.template || options.templateDir,
       },
-      setup
+      setup,
     )
   })
 

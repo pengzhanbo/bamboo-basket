@@ -19,5 +19,5 @@ export default defineConfig(
 
     pkg.addDependence('vue', 'latest')
     pkg.addDevDependence('vite', 'latest')
-  }
+  },
 )

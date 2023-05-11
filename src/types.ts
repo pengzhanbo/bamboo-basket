@@ -90,7 +90,7 @@ export interface SetupOptions {
    * 添加交互式命令行对话框
    */
   addPrompts: <T extends string = string>(
-    schema: PromptObject
+    schema: PromptObject,
   ) => Promise<Answers<T>>
 }
 

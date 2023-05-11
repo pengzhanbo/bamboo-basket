@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import path from 'path'
+import path from 'node:path'
 import _ from 'lodash'
 import ora from 'ora'
 import colors from 'picocolors'
@@ -22,7 +22,7 @@ const debug = createDebug('')
 
 async function getTemplate(
   templateDir?: string,
-  templateList?: Templates
+  templateList?: Templates,
 ): Promise<TemplateItem> {
   if (templateDir) {
     return { name: 'default', dir: templateDir }
@@ -61,8 +61,8 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   ) {
     throw new Error(
       `One of ${colors.cyan('options.templateDir')} or ${colors.cyan(
-        'options.templateList'
-      )} must not be undefined and null`
+        'options.templateList',
+      )} must not be undefined and null`,
     )
   }
   let answer: Record<string, any> = Object.create(null)
@@ -70,7 +70,7 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   const { target: _target, argv } = parseArgv(
     options.argv || {},
     options.helpText || '',
-    import.meta
+    import.meta,
   )
   const target = getTarget(_target, options.cwd)
 
@@ -83,14 +83,14 @@ async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
   // 获取 当前使用的模板
   const currentTemplate = await getTemplate(
     options.templateDir,
-    options.templateList
+    options.templateList,
   )
   answer.templateName = currentTemplate.name
 
   debug('template', currentTemplate)
 
   const addPrompts = async <T extends string = string>(
-    schema: PromptObject<T>
+    schema: PromptObject<T>,
   ) => {
     const _answer = await prompts(schema)
     answer = _.merge(answer, _answer)
