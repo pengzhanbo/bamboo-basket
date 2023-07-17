@@ -56,7 +56,7 @@
     "cac": "^6.7.14",
     "consola": "^3.2.3",
     "debug": "^4.3.4",
-    "esbuild": "^0.18.11",
+    "esbuild": "^0.18.13",
     "execa": "^7.1.1",
     "fast-glob": "^3.3.0",
     "handlebars": "^4.7.7",
@@ -67,19 +67,19 @@
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",
     "semver": "^7.5.4",
-    "sort-package-json": "^2.5.0"
+    "sort-package-json": "^2.5.1"
   },
   "devDependencies": {
-    "@pengzhanbo/eslint-config": "^0.3.18",
-    "@pengzhanbo/prettier-config": "^0.3.18",
+    "@pengzhanbo/eslint-config": "^0.4.0",
+    "@pengzhanbo/prettier-config": "^0.4.0",
     "@types/debug": "^4.1.8",
     "@types/lodash": "^4.14.195",
-    "@types/node": "^20.4.1",
+    "@types/node": "^20.4.2",
     "@types/pacote": "^11.1.5",
     "@types/prompts": "^2.4.4",
     "@types/semver": "^7.5.0",
     "bumpp": "^9.1.1",
-    "eslint": "^8.44.0",
+    "eslint": "^8.45.0",
     "prettier": "^3.0.0",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6"
