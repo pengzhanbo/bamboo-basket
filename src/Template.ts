@@ -41,11 +41,11 @@ export default class Template<T = Record<string, any>> {
    * @param glob string | string[] 文件路径，或 glob匹配字符串
    */
   public addExclude(glob: string | string[]) {
-    if (Array.isArray(glob)) {
+    if (Array.isArray(glob))
       this.exclude.push(...glob)
-    } else {
+
+    else
       this.exclude.push(glob)
-    }
   }
 
   public async generate() {

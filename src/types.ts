@@ -1,8 +1,11 @@
-import type { AnyFlags } from 'meow'
 import type { Ora } from 'ora'
 import type { Answers, PromptObject } from 'prompts'
 import type PackageManager from './PackageManager'
 import type Template from './Template'
+
+import { AnyFlags } from './meow.type'
+
+export { AnyFlags }
 
 export interface TemplateItem {
   /**

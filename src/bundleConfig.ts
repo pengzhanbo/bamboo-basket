@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
+import process from 'node:process'
 import { performance } from 'node:perf_hooks'
 import { pathToFileURL } from 'node:url'
 import { build } from 'esbuild'
@@ -19,23 +20,22 @@ const DEFAULT_CONFIG_FILES = [
   'basket.config.mts',
 ]
 
-export const loadConfigFromFile = async (
-  configFile?: string,
-  configRoot = process.cwd(),
-): Promise<{
+export async function loadConfigFromFile(configFile?: string, configRoot = process.cwd()): Promise<{
   config: [BambooBasketOptions, Setup]
   path: string
-} | null> => {
+} | null> {
   const start = performance.now()
   const getTime = () => `${(performance.now() - start).toFixed(2)}ms`
 
   let resolvedPath!: string
   if (configFile) {
     resolvedPath = path.resolve(configFile)
-  } else {
+  }
+  else {
     for (const filename of DEFAULT_CONFIG_FILES) {
       const filepath = path.resolve(configRoot, filename)
-      if (!fs.existsSync(filepath)) continue
+      if (!fs.existsSync(filepath))
+        continue
 
       resolvedPath = filepath
       break
@@ -50,14 +50,17 @@ export const loadConfigFromFile = async (
   let isESM = false
   if (/\.m[jt]s$/.test(resolvedPath)) {
     isESM = true
-  } else if (/\.c[jt]s$/.test(resolvedPath)) {
+  }
+  else if (/\.c[jt]s$/.test(resolvedPath)) {
     isESM = false
-  } else {
+  }
+  else {
     // check package.json for type: "module" and set `isESM` to true
     try {
       const pkg = lookupFile(configRoot, ['package.json'])
       isESM = !!pkg && JSON.parse(pkg).type === 'module'
-    } catch (e) {}
+    }
+    catch (e) {}
   }
 
   try {
@@ -74,7 +77,8 @@ export const loadConfigFromFile = async (
       config,
       path: resolvedPath,
     }
-  } catch (e) {
+  }
+  catch (e) {
     logger.error(colors.red(`failed to load config from ${resolvedPath}`))
     logger.error(e)
   }
@@ -121,12 +125,12 @@ async function bundleConfigFile(
         setup(build) {
           build.onLoad({ filter: /\.[cm]?[jt]s$/ }, async (args) => {
             const contents = await fs.promises.readFile(args.path, 'utf-8')
-            const injectValues =
-              `const ${dirnameVarName} = ${JSON.stringify(
+            const injectValues
+              = `const ${dirnameVarName} = ${JSON.stringify(
                 path.dirname(args.path),
-              )};` +
-              `const ${filenameVarName} = ${JSON.stringify(args.path)};` +
-              `const ${importMetaUrlVarName} = ${JSON.stringify(
+              )};`
+              + `const ${filenameVarName} = ${JSON.stringify(args.path)};`
+              + `const ${importMetaUrlVarName} = ${JSON.stringify(
                 pathToFileURL(args.path).href,
               )};`
             return {
@@ -161,21 +165,24 @@ async function loadConfigFromBundledFile(
     fs.writeFileSync(fileNameTmp, bundledCode)
     try {
       return (await import(fileUrl)).default
-    } finally {
+    }
+    finally {
       try {
         fs.unlinkSync(fileNameTmp)
-      } catch {}
+      }
+      catch {}
     }
-  } else {
+  }
+  else {
     const extension = path.extname(fileName)
     const realFileName = fs.realpathSync(fileName)
     const loaderExt = extension in _require.extensions ? extension : '.js'
     const defaultLoader = _require.extensions[loaderExt]!
     _require.extensions[loaderExt] = (module: NodeModule, filename: string) => {
       if (filename === realFileName) {
-        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;(module as NodeModuleWithCompile)._compile(bundledCode, filename)
-      } else {
+      }
+      else {
         defaultLoader(module, filename)
       }
     }

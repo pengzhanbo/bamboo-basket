@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import _ from 'lodash'
 import ora from 'ora'
 import colors from 'picocolors'
@@ -24,20 +25,20 @@ async function getTemplate(
   templateDir?: string,
   templateList?: Templates,
 ): Promise<TemplateItem> {
-  if (templateDir) {
+  if (templateDir)
     return { name: 'default', dir: templateDir }
-  }
-  if (!templateList || templateList.length === 0) {
+
+  if (!templateList || templateList.length === 0)
     return { name: 'default', dir: 'template' }
-  }
-  if (templateList.length === 1) {
+
+  if (templateList.length === 1)
     return templateList[0]
-  }
+
   const { template } = await prompts({
     name: 'template',
     message: 'Select template',
     type: 'select',
-    choices: templateList.map((template) => ({
+    choices: templateList.map(template => ({
       value: template,
       title: template.name,
       description: template.description,
@@ -52,12 +53,12 @@ function getTarget(target: string, cwd?: string) {
 }
 
 async function bambooBasket(options: BambooBasketOptions, setup?: Setup) {
-  if (!options.root) {
+  if (!options.root)
     throw new Error(`${colors.cyan('options.root')} is empty`)
-  }
+
   if (
-    !options.templateDir &&
-    (!options.templateList || options.templateList.length === 0)
+    !options.templateDir
+    && (!options.templateList || options.templateList.length === 0)
   ) {
     throw new Error(
       `One of ${colors.cyan('options.templateDir')} or ${colors.cyan(

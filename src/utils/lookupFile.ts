@@ -18,16 +18,14 @@ export function lookupFile(
       const result = options?.pathOnly
         ? fullPath
         : fs.readFileSync(fullPath, 'utf-8')
-      if (!options?.predicate || options.predicate(result)) {
+      if (!options?.predicate || options.predicate(result))
         return result
-      }
     }
   }
   const parentDir = path.dirname(dir)
   if (
-    parentDir !== dir &&
-    (!options?.rootDir || parentDir.startsWith(options?.rootDir))
-  ) {
+    parentDir !== dir
+    && (!options?.rootDir || parentDir.startsWith(options?.rootDir))
+  )
     return lookupFile(parentDir, formats, options)
-  }
 }

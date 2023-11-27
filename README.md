@@ -79,7 +79,7 @@ bambooBasket({
   pkg.setPackage((pkgJson) => {
     pkgJson.name = 'my-project'
   })
-  // 通过 pkg.addDependence(dependenceName, version) 
+  // 通过 pkg.addDependence(dependenceName, version)
   // 或 pkg.addDevDependence(dependenceName, version)  动态添加依赖
   // 你可以通过指定  version 值 为 latest / next / prev 等依赖设置的 dist-tags，来获取最新的版本号
   pkg.addDevDependence('foo', '^1.0.0')

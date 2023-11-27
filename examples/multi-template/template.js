@@ -10,10 +10,10 @@ bambooBasket(
     ],
   },
   async ({ template, templateName }) => {
-    if (templateName === 'template-1') {
+    if (templateName === 'template-1')
       template.setData({})
-    } else if (templateName === 'template-2') {
+
+    else if (templateName === 'template-2')
       template.setData({})
-    }
   },
 )

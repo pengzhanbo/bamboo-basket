@@ -1,12 +1,8 @@
 import _ from 'lodash'
-import type { AnyFlags } from 'meow'
 import meow from 'meow'
+import type { AnyFlags } from './types'
 
-export const parseArgv = (
-  flags: AnyFlags | (() => AnyFlags),
-  help: string,
-  importMeta: any,
-) => {
+export function parseArgv(flags: AnyFlags | (() => AnyFlags), help: string, importMeta: any) {
   const argv = meow({
     importMeta,
     flags: _.isFunction(flags) ? flags() : flags ?? {},

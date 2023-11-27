@@ -22,7 +22,8 @@ cli
   .action(async (target: string, cliOptions: CliOptions) => {
     target ??= '.'
     const result = await loadConfigFromFile(cliOptions.config)
-    if (!result) return
+    if (!result)
+      return
     logger.log('load config: ', result.path)
 
     const [options, setup] = result.config

@@ -1,42 +1,46 @@
 {
   "name": "bamboo-basket",
+  "type": "module",
   "version": "0.2.2",
   "description": "create template helper",
-  "keywords": [
-    "npm init",
-    "template",
-    "create template"
-  ],
-  "license": "MIT",
   "author": "pengzhanbo <q942450674@outlook.com> (https://github.com/pengzhanbo)",
+  "license": "MIT",
   "homepage": "https://github.com/pengzhanbo/bamboo-basket",
   "repository": {
     "url": "https://github.com/pengzhanbo/bamboo-basket.git",
     "type": "git"
   },
-  "bin": {
-    "basket": "./bin/basket.mjs"
-  },
-  "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "keywords": [
+    "npm init",
+    "template",
+    "create template"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
-  "scripts": {
-    "dev": "DEBUG=basket:* tsup --watch",
-    "build": "tsup",
-    "prepublishOnly": "pnpm build",
-    "release": "bumpp package.json --commit --push --tag && pnpm publish --access public"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "basket": "./bin/basket.mjs"
   },
   "files": [
     "bin",
     "dist"
   ],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "scripts": {
+    "dev": "DEBUG=basket:* tsup --watch",
+    "build": "tsup",
+    "lint": "eslint .",
+    "prepublishOnly": "pnpm build",
+    "release": "bumpp package.json --commit --push --tag && pnpm publish --access public"
+  },
   "tsup": {
     "entry": [
       "src/index.ts",
@@ -51,40 +55,34 @@
       "cjs"
     ]
   },
-  "prettier": "@pengzhanbo/prettier-config",
   "dependencies": {
     "cac": "^6.7.14",
     "consola": "^3.2.3",
     "debug": "^4.3.4",
-    "esbuild": "^0.18.16",
-    "execa": "^7.1.1",
-    "fast-glob": "^3.3.1",
-    "handlebars": "^4.7.7",
+    "esbuild": "^0.19.8",
+    "execa": "^8.0.1",
+    "fast-glob": "^3.3.2",
+    "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
-    "meow": "^12.0.1",
-    "ora": "^6.3.1",
-    "pacote": "^15.2.0",
+    "meow": "^12.1.1",
+    "ora": "^7.0.1",
+    "pacote": "^17.0.4",
     "picocolors": "^1.0.0",
     "prompts": "^2.4.2",
     "semver": "^7.5.4",
-    "sort-package-json": "^2.5.1"
+    "sort-package-json": "^2.6.0"
   },
   "devDependencies": {
-    "@pengzhanbo/eslint-config": "^0.4.0",
-    "@pengzhanbo/prettier-config": "^0.4.0",
-    "@types/debug": "^4.1.8",
-    "@types/lodash": "^4.14.195",
-    "@types/node": "^20.4.4",
-    "@types/pacote": "^11.1.5",
-    "@types/prompts": "^2.4.4",
-    "@types/semver": "^7.5.0",
-    "bumpp": "^9.1.1",
-    "eslint": "^8.45.0",
-    "prettier": "^3.0.0",
-    "tsup": "^7.1.0",
-    "typescript": "^5.1.6"
-  },
-  "engines": {
-    "node": "^14.18.0 || >=16"
+    "@pengzhanbo/eslint-config": "^1.1.0",
+    "@types/debug": "^4.1.12",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.10.0",
+    "@types/pacote": "^11.1.8",
+    "@types/prompts": "^2.4.9",
+    "@types/semver": "^7.5.6",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.54.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
   }
 }

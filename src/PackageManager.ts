@@ -30,7 +30,8 @@ export default class PackageManager {
     try {
       const content = await fs.readFile(filepath, 'utf-8')
       return JSON.parse(content)
-    } catch (e) {}
+    }
+    catch (e) {}
     return {}
   }
 
@@ -77,11 +78,10 @@ export default class PackageManager {
     depsOrName: Record<string, string> | string,
     version?: PackageVersion,
   ): void {
-    if (typeof depsOrName === 'string') {
+    if (typeof depsOrName === 'string')
       this.dependence[depsOrName] = version!
-    } else {
+    else
       this.dependence = _.merge(this.dependence, depsOrName)
-    }
   }
 
   /**
@@ -103,19 +103,17 @@ export default class PackageManager {
     depsOrName: Record<string, string> | string,
     version?: PackageVersion,
   ): void {
-    if (typeof depsOrName === 'string') {
+    if (typeof depsOrName === 'string')
       this.devDependence[depsOrName] = version!
-    } else {
+    else
       this.devDependence = _.merge(this.devDependence, depsOrName)
-    }
   }
 
   private async runQueue() {
     for (const fn of this.queueList) {
       const data = await fn(this.pkg)
-      if (data) {
+      if (data)
         this.pkg = _.merge(this.pkg, data)
-      }
     }
   }
 

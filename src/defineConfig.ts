@@ -1,6 +1,5 @@
 import type { BambooBasketOptions, Setup } from './types'
 
-export const defineConfig = (
-  options: BambooBasketOptions,
-  setup: Setup,
-): [BambooBasketOptions, Setup] => [options, setup]
+export function defineConfig(options: BambooBasketOptions, setup: Setup): [BambooBasketOptions, Setup] {
+  return [options, setup]
+}
