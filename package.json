@@ -1,7 +1,7 @@
 {
   "name": "bamboo-basket",
   "type": "module",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "create template helper",
   "author": "pengzhanbo <q942450674@outlook.com> (https://github.com/pengzhanbo)",
   "license": "MIT",
